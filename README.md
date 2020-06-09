@@ -1,8 +1,8 @@
-# AI
-
-##Purpose
+# AI Purpose
 
 This repository is used to record the process of learning Machine Learning as a beginner
+
+
 
 ## Objective
 
