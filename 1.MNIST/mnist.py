@@ -7,6 +7,7 @@ Created on Thu Jun  4 20:05:05 2020
 
 import tensorflow as tf
 import datetime
+from matplotlib import pyplot as plt # show image
 
 # load mnist dataset
 mnist = tf.keras.datasets.mnist
@@ -49,5 +50,6 @@ model.fit(x_train, y_train,
 # use testing dataset
 model.evaluate(x_test, y_test, verbose=2) # verbose: showing process mode: 0,1,2
 
-
-
+# show testing image result
+plt.imshow(x_test[0])
+plt.show()
