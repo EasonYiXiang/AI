@@ -13,6 +13,10 @@ mnist = tf.keras.datasets.mnist
 (x_train, y_train), (x_test, y_test) = mnist.load_data()
 x_train, x_test = x_train / 255.0, x_test / 255.0
 
+
+
+# Add a channels dimension
+# 多增加第4個 dimension:"channel"
 x_train = x_train[..., tf.newaxis]
 x_test = x_test[..., tf.newaxis]
 
@@ -28,6 +32,7 @@ print(x_train.shape)
 #  不要跟"from_tensor"搞混了!
 
 #2.將training data做shuffle打亂 和 將batch size設定為 32
+# tf.data.Dataset.from_tensor_slices : Creates a Dataset whose elements are slices of the given tensors.
 train_dataset = tf.data.Dataset.from_tensor_slices((x_train, y_train))
 train_dataset = train_dataset.shuffle(10000).batch(32)
 
@@ -44,10 +49,10 @@ test_dataset = test_dataset.batch(32)
 #  是哪種 Layer(Convolution, dense...)
 
 #3.call定義了這個 Model的 forward pass
-
+#
 class MyModel(Model):
   def __init__(self):
-    super(MyModel, self).__init__()    
+    super(MyModel, self).__init__()     # call __init__() from tf.Keras.Model
     # Define your layers here.
     self.conv1 = Conv2D(32, 3, activation='relu')
     self.flatten = Flatten()
@@ -84,6 +89,7 @@ test_accuracy = tf.keras.metrics.SparseCategoricalAccuracy(name='test_accuracy')
 #  * tf.function
 #  * tf.GradientTape
 
+# @ : Decorator 
 @tf.function
 def train_step(images, labels):
     
@@ -101,7 +107,9 @@ def train_step(images, labels):
     train_loss(loss)
     train_accuracy(labels, predictions)
     
-    #== test the model (定義)==#
+   
+    
+#== test the model (定義)==#
 #  * tf.function
 
 @tf.function
